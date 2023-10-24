@@ -1,0 +1,124 @@
+# Fluxo de trabalho básico de provisionar a Instância AWS e a Aplicação para Hackweek
+name: g4-action
+
+# Controls when the workflow will run
+on:
+  # Aciona este fluxo de trabalho em eventos de push ou pull request na branch "main"
+  push:
+    branches: [ "main" ]
+  # Serve para configuração de disparo manual deste fluxo de trabalho
+  workflow_dispatch:
+
+# Variáveis configuradas no Secrets
+env: 
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_DEFAULT_REGION: 'us-east-1'
+
+# Sequencia de execução do fluxo de trabalho
+jobs:
+  # Fluxo de trabalho do único job chamado "build"
+  build:
+    # Tipo de runner o qual o job é executado
+    runs-on: ubuntu-latest
+    
+    # Sequências de tarefas a serem executadas
+    steps:
+      # Faz o checkout do repositório em $GITHUB_WORKSPACE e assim o job o acessa
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Cria um Bucket S3 AWS para guardar o arquivo terraform.tfstate
+      - name: Create Bucket S3
+        run: aws s3api create-bucket --bucket g4-bucket-matheus --region us-east-1
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: 'us-east-1' 
+  
+      # Configura as chaves SSH na instancia provisionada
+      - name: Setup SSH Keys
+        run: |
+          eval `ssh-agent -s`
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          echo "${{ secrets.SSH_PUBLIC_KEY }}" > ~/.ssh/id_rsa.pub
+          chmod 600 ~/.ssh/id_rsa
+          chmod 644 ~/.ssh/id_rsa.pub
+          ssh-keyscan github.com >> ~/.ssh/known_hosts 
+
+      # Configura o Terraform
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_wrapper: false
+      
+      # Comando para inicializar o Terraform
+      - name: Terraform Init
+        run: terraform init
+
+      # - name: Terraform Plan # nao precisa disso aqui, isso é para testar localmente se rola OK
+      #   run: terraform plan
+
+      # Comando que iŕa aplicar o Terraform
+      - name: Terraform Apply
+        run: terraform apply -auto-approve  
+
+      - name: Wait for instance to be ready
+        run: sleep 20  # waits for 20 seconds
+
+      # Define a saída instance_id do outputs.tf como Variável de Ambiente
+      - name: Set INSTANCE_IP environment variable
+        run: echo "instance_ip=`terraform output -raw instance_ip`" >> $GITHUB_ENV
+      
+      # Tarefa que aguarda a instância ficar pronta
+      - name: Verificar status da instância EC2
+        run: |
+          instance_id="${instance_id}"
+         
+          while true; do
+            status=$(aws ec2 describe-instance-status --instance-id $instance_id --query 'InstanceStatuses[0].InstanceStatus.Status' --output text)
+            system_status=$(aws ec2 describe-instance-status --instance-id $instance_id --query 'InstanceStatuses[0].SystemStatus.Status' --output text)
+
+            if [ "$status" == "ok" ] && [ "$system_status" == "ok" ]; then
+              echo "A instância possui 2/2 verificações aprovadas."
+              break  # Sai do loop quando a condição é atendida
+            else
+              echo "Aguardando instância estar com 2/2 verificações aprovadas..."
+              sleep 10
+            fi
+          done
+      
+          
+      # Define a saída instance_ip do outputs.tf como Variável de Ambiente
+      - name: Set INSTANCE_IP environment variable
+        run: echo "instance_ip=`terraform output -raw instance_ip`" >> $GITHUB_ENV
+      
+      # Configura o Python e a versão
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      # Instala o Ansible
+      - name: Install Ansible
+        run: pip install ansible
+           
+      # Cria de forma automatizada o arquivo inventory.ini do Ansible
+      - name: Create inventory Ansible
+        run: |
+          echo "[pc_hackweek_g4_matheus]" > inventory.ini
+          echo "${instance_ip}" >> inventory.ini
+          echo "" >> inventory.ini 
+ 
+      # Exibe o arquivo inventory.ini para verificação se está no formato adequado
+      - name: Display Ansible Inventory
+        run: cat inventory.ini
+      
+      #para escanear a chave pública de um servidor remoto (no caso, um servidor SSH) e adicionar essa chave ao arquivo known_hosts
+      - name: host key
+        run: ssh-keyscan ${instance_ip} >> ~/.ssh/known_hosts 
+
+      # Executa o Playbook do Ansible
+      - name: Run Ansible Playbook
+        run: ansible-playbook -i inventory.ini ansible-playbook-install-docker.yml --limit pc_hackweek_g4_matheus --private-key ~/.ssh/id_rsa
