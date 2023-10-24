@@ -14,5 +14,5 @@ variable "instance_name" {
   type        = string
 
   # Valor padrão caso nenhum valor seja especificado durante o uso do Terraform
-  default     = "pc-hackweek-g4-matheus"
+  default     = "vm_more_green"
 }

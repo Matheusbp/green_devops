@@ -40,7 +40,7 @@ resource "aws_security_group" "security_group_g4_matheus" {
 }
 
 # Definindo uma instância EC2 na AWS
-resource "aws_instance" "pc_hackweek_g4_matheus" {
+resource "aws_instance" "vm_more_green" {
   ami           = "ami-053b0d53c279acc90"  # AMI do Ubuntu 18.04
   instance_type = "t2.micro"  # Tipo de instância
   key_name      = aws_key_pair.keypair_hackweek_chave_matheus.key_name # Chave SSH para acessar a instância
@@ -57,7 +57,7 @@ resource "aws_instance" "pc_hackweek_g4_matheus" {
               EOF
 
   tags = {
-    Name = "pc-hackweek-g4-matheus"
+    Name = "vm_more_green"
     Environment = "dev"
     Application = "backend"
     Class = "DevOps"    

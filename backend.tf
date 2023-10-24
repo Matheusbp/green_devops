@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    bucket         = "g4-bucket-matheus"  # Nome do bucket S3 onde o estado do Terraform será armazenado
+    bucket         = "bucket_more_green"  # Nome do bucket S3 onde o estado do Terraform será armazenado
     key            = "terraform.tfstate"  # Nome do arquivo no bucket que conterá o estado do Terraform
     region         = "us-east-1" # Região da AWS onde o bucket S3 está localizado
     encrypt        = true # Habilitar a criptografia do estado do Terraform

@@ -1,6 +1,6 @@
 ---
 - name: Instalar Docker no Host Remoto
-  hosts: pc_hackweek_g4_matheus # Define o grupo de hosts que receberá essa tarefa
+  hosts: vm_more_green # Define o grupo de hosts que receberá essa tarefa
   become: yes  # Permite que as tarefas sejam executadas como usuário privilegiado (sudo)
   remote_user: ubuntu  # Define o usuário remoto a ser usado para a conexão SSH
   
@@ -57,6 +57,7 @@
       become_user: ubuntu  # Define o usuário para executar a tarefa (ubuntu)
       git:
         repo: 'git@github.com:Matheusbp/hackweek_devs2blu_aplicativo.git'
+        # repo: 'git@github.com:TechTitans-MeioAmbiente/green.git'
         dest: /home/ubuntu/app # Diretório de destino para o clone
         version: main  # Ramo (branch) a ser clonado
         accept_hostkey: yes  # Aceita automaticamente a chave do host Git
@@ -64,6 +65,7 @@
     - name: Executar o comando usermod para adicionar usuário ao grupo Docker
       shell: sudo usermod -aG docker ubuntu
     
+    #Modificar daqui para baixo, que é onde buildaremos o dokerfile em C#
     - name: Acessar a instância por SSH e Buildar o Dockerfile
       become: yes
       become_user: ubuntu
