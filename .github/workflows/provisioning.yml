@@ -30,7 +30,7 @@ jobs:
 
       # Cria um Bucket S3 AWS para guardar o arquivo terraform.tfstate
       - name: Create Bucket S3
-        run: aws s3api create-bucket --bucket bucket_more_green --region us-east-1
+        run: aws s3api create-bucket --bucket bucket-more-green --region us-east-1
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
