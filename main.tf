@@ -3,8 +3,8 @@ provider "aws" {
 }
 
 # Definindo um grupo de segurança (Security Group) na AWS
-resource "aws_security_group" "security_group_g4_matheus" {
-  name        = "security-group-g4-matheus"
+resource "aws_security_group" "security_group_more_green" {
+  name        = "security_group_more_green"
   description = "Security Group para SSH, HTTP e porta 8000"
 
 # Regras de ingresso que permitem o tráfego de entrada
@@ -43,9 +43,9 @@ resource "aws_security_group" "security_group_g4_matheus" {
 resource "aws_instance" "vm_more_green" {
   ami           = "ami-053b0d53c279acc90"  # AMI do Ubuntu 18.04
   instance_type = "t2.micro"  # Tipo de instância
-  key_name      = aws_key_pair.keypair_hackweek_chave_matheus.key_name # Chave SSH para acessar a instância
+  key_name      = aws_key_pair.keypair_more_green.key_name # Chave SSH para acessar a instância
 
-  vpc_security_group_ids = [aws_security_group.security_group_g4_matheus.id] # Associando o grupo de segurança à instância
+  vpc_security_group_ids = [aws_security_group.security_group_more_green.id] # Associando o grupo de segurança à instância
 
   # Configurando o script de inicialização da instância
   user_data = <<-EOF
