@@ -2,7 +2,7 @@ provider "aws" {
   region = "us-east-1"  # Escolha a região que preferir
 }
 
-# Definindo um grupo de segurança (Security Group) na AWS
+# Definindo ou criando (caso ela não exista) um grupo de segurança (Security Group) na AWS
 resource "aws_security_group" "security_group_more_green" {
   name        = "security_group_more_green"
   description = "Security Group para SSH, HTTP e porta 8000"
