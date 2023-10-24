@@ -8,7 +8,7 @@
     - name: Atualizar lista de pacotes
       apt:
         update_cache: # Atualiza a lista de pacotes do sistema
-        state: present # Garante que os pacotes estejam atualizados
+      state: present # Garante que os pacotes estejam atualizados
       register: apt_latest # Registra o resultado da tarefa para uso posterior
 
     - name: Instalar pacotes necessários
