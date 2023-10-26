@@ -70,11 +70,7 @@
       copy:
         dest: "/home/ubuntu/app/BackEnd/appsettings.json"
         content: |
-          {
-            "ConnectionStrings": {
-              "DefaultConnection": "{{ lookup('env','CONNECTION_STRING') }}"
-            }
-          }
+          "{{ lookup('env','CONNECTION_STRING') }}"
 
     # - name: Passando o appsetings para o local correto
     #   copy: 
