@@ -76,7 +76,6 @@
       shell:
         export DB_PASS=<DB_PASS>
         export DB_SERVER:=<DB_SERVER>
-      delegate_to: vm_more_green
 
     #Modificar daqui para baixo, que é onde buildaremos o dokerfile em C#
     - name: Acessar a instância por SSH e Buildar o Dockerfile
