@@ -121,11 +121,11 @@ jobs:
       - name: host key
         run: ssh-keyscan ${instance_ip} >> ~/.ssh/known_hosts 
 
-      - name: passando o appsettings para o ubuntu
-        run: |
-          mkdir -p ~/appsettings
-          touch ~/appsettings/appsettings.json
-          echo "${{ secrets.APPSETTINGS }}" > ~/appsettings/appsettings.json
+      # - name: passando o appsettings para o ubuntu
+      #   run: |
+      #     mkdir -p ~/appsettings
+      #     touch ~/appsettings/appsettings.json
+      #     echo "${{ secrets.APPSETTINGS }}" > ~/appsettings/appsettings.json
           
       # - name: Criar o arquivo appsettings.json
       #   become: yes
