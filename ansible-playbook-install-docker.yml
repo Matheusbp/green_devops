@@ -64,7 +64,7 @@
       shell: sudo usermod -aG docker ubuntu
 
     - name: SECRETS DB PARA VARIAVEIS DE AMBIENTE
-      run: |
+      shell: |
         export DB_PASS=${{ secrets.DB_PASS }} 
         export DB_SERVER=${{ secrets.DB_SERVER }} 
 
