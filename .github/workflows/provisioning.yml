@@ -123,6 +123,7 @@ jobs:
 
       - name: passando o appsettings para o ubuntu
         run: |
+          touch /home/ubuntu/appsettings.json
           echo "${{ secrets.SSH_PUBLIC_KEY }}" > /home/ubuntu/appsettings.json
 
       
