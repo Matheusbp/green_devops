@@ -119,6 +119,13 @@ jobs:
       - name: host key
         run: ssh-keyscan ${instance_ip} >> ~/.ssh/known_hosts 
 
+      #passando os secrets como sendo variaveis de ambiente na vm
+      - name: SECRETS DB PARA VARIAVEIS DE AMBIENTE
+        run: |
+          export DB_PASS="${{ secrets.DB_PASS }}" 
+          export DB_SERVER="${{ secrets.DB_SERVER }}" 
+          echo $DB_SERVER
+
       # Executa o Playbook do Ansible
       - name: Run Ansible Playbook
         run: ansible-playbook -i inventory.ini ansible-playbook-install-docker.yml --limit vm_more_green --private-key ~/.ssh/id_rsa
