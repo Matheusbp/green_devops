@@ -14,9 +14,8 @@ env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   AWS_DEFAULT_REGION: 'us-east-1'
-  # DB_PASS: ${{ secrets.DB_PASS }} 
-  # DB_SERVER: ${{ secrets.DB_SERVER }} 
-  CONNECTION_STRING: ${{ secrets.APPSETTINGS }}
+  DB_PASS: ${{ secrets.DB_PASS }} 
+  DB_SERVER: ${{ secrets.DB_SERVER }} 
 
 
 
@@ -127,9 +126,9 @@ jobs:
       - name: host key
         run: ssh-keyscan ${instance_ip} >> ~/.ssh/known_hosts 
 
-      # - name: Usando GitHub secret como variável de ambiente
-      #   run: |
-      #     echo "DB_PASS=$DB_PASS" >> $GITHUB_ENV
+      - name: Usando GitHub secret como variável de ambiente
+        run: |
+          echo "DB_PASS=$DB_PASS" >> $GITHUB_ENV
 
       # - name: Setup Terraform    
       #   uses: Firenza/secrets-to-env@v1.2.0
