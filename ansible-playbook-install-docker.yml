@@ -73,7 +73,7 @@
       args:
         executable: /bin/bash
 
-    - name: Executar o Container na porta 80
+    - name: Executar o Container na porta 8081
       become: yes
       docker_container:
         name: green-container
