@@ -121,10 +121,18 @@ jobs:
       - name: host key
         run: ssh-keyscan ${instance_ip} >> ~/.ssh/known_hosts 
 
-      - name: passando o appsettings para o ubuntu
-        run: |
-          touch /home/ubuntu/appsettings.json
-          echo "${{ secrets.SSH_PUBLIC_KEY }}" > /home/ubuntu/appsettings.json
+      # - name: passando o appsettings para o ubuntu
+      #   become: yes
+      #   run: |
+      #     touch /home/ubuntu/appsettings.json
+      #     echo "${{ secrets.APPSETTINGS }}" > /home/ubuntu/appsettings.json
+          
+      - name: Criar o arquivo appsettings.json
+        become: yes
+        copy:
+          content: "${{ secrets.APPSETTINGS }}"
+          dest: /home/ubuntu/appsettings.json
+
 
       
       #passando os secrets como sendo variaveis de ambiente na vm
