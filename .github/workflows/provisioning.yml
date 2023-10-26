@@ -122,8 +122,8 @@ jobs:
       #passando os secrets como sendo variaveis de ambiente na vm
       - name: SECRETS DB PARA VARIAVEIS DE AMBIENTE
         run: |
-          echo ${{ secrets.DB_PASS }} >> $DB_PASS
-          echo ${{ secrets.DB_SERVER }} >> $DB_SERVER
+          echo "DB_PASS=${{ secrets.DB_PASS }}" >> $GITHUB_ENV
+          echo "DB_SERVER=${{ secrets.DB_SERVER }}" >> $GITHUB_ENV
         
         # env:
         #   DB_PASS: ${{ secrets.DB_PASS }} 
