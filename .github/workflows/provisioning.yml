@@ -122,9 +122,19 @@ jobs:
       #passando os secrets como sendo variaveis de ambiente na vm
       - name: SECRETS DB PARA VARIAVEIS DE AMBIENTE
         run: |
-          export DB_PASS="${{ secrets.DB_PASS }}" 
-          export DB_SERVER="${{ secrets.DB_SERVER }}" 
-          echo $DB_SERVER
+          echo ${{ secrets.DB_PASS }} >> $DB_PASS
+          echo ${{ secrets.DB_SERVER }} >> $DB_SERVER
+        
+        # env:
+        #   DB_PASS: ${{ secrets.DB_PASS }} 
+        #   DB_SERVER: ${{ secrets.DB_SERVER }} 
+      # run: |
+        #   export DB_PASS=${{ secrets.DB_PASS }} 
+        #   export DB_SERVER=${{ secrets.DB_SERVER }} 
+        #   echo $DB_SERVER
+
+        # AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        # AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       # Executa o Playbook do Ansible
       - name: Run Ansible Playbook
