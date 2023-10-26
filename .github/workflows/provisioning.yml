@@ -126,11 +126,11 @@ jobs:
       - name: host key
         run: ssh-keyscan ${instance_ip} >> ~/.ssh/known_hosts 
 
-      - name: Setup Terraform    
-        uses: Firenza/secrets-to-env@v1.2.0
-        with:
-            secrets: ${{ toJSON(secrets) }}
-
+      # - name: Setup Terraform    
+      #   uses: Firenza/secrets-to-env@v1.2.0
+      #   with:
+      #       secrets: ${{ toJSON(secrets) }}
+      
       # - name: passando o appsettings para o ubuntu
       #   run: |
       #     mkdir -p ~/appsettings
