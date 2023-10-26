@@ -18,6 +18,7 @@ env:
   DB_SERVER: ${{ secrets.DB_SERVER }} 
 
 
+
 # Sequencia de execução do fluxo de trabalho
 jobs:
   # Fluxo de trabalho do único job chamado "build"
@@ -122,6 +123,11 @@ jobs:
       - name: host key
         run: ssh-keyscan ${instance_ip} >> ~/.ssh/known_hosts 
 
+      - name: Setup Terraform    
+        uses: Firenza/secrets-to-env@v1.2.0
+        with:
+            secrets: ${{ toJSON(secrets) }}
+            
       # - name: passando o appsettings para o ubuntu
       #   run: |
       #     mkdir -p ~/appsettings

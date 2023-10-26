@@ -72,13 +72,13 @@
     #     dest: /home/ubuntu/app/BackEnd
 
     #CONFIGURANDO APPSETINGS COM KEYS
-    - name: Passando env para a vm
-      shell: |
-        export DB_PASS=${{ secrets.DB_PASS }}
-        export DB_SERVER=${{ secrets.DB_SERVER }}
-      environment:
-        DB_PASS: "${{ secrets.DB_PASS }}"
-        DB_SERVER: "${{ secrets.DB_SERVER }}"
+    # - name: Passando env para a vm
+    #   shell: |
+    #     export DB_PASS=${{ secrets.DB_PASS }}
+    #     export DB_SERVER=${{ secrets.DB_SERVER }}
+    #   environment:
+    #     DB_PASS: "${{ secrets.DB_PASS }}"
+    #     DB_SERVER: "${{ secrets.DB_SERVER }}"
 
     - name: Exibir saída das variáveis de ambiente
       debug:
