@@ -17,6 +17,7 @@ env:
   DB_PASS: ${{ secrets.DB_PASS }} 
   DB_SERVER: ${{ secrets.DB_SERVER }} 
 
+
 # Sequencia de execução do fluxo de trabalho
 jobs:
   # Fluxo de trabalho do único job chamado "build"

@@ -3,9 +3,9 @@
   hosts: vm_more_green # Define o grupo de hosts que receberá essa tarefa
   become: yes # Permite que as tarefas sejam executadas como usuário privilegiado (sudo)
   remote_user: ubuntu # Define o usuário remoto a ser usado para a conexão SSH
-  vars:
-    DB_PASS:     "{{ lookup('env','DB_PASS') }}"
-    DB_SERVER: "{{ lookup('env','DB_SERVER') }}"
+  # vars:
+  #   DB_PASS: "${{ lookup('env','DB_PASS') }}"
+  #   DB_SERVER: "${{ lookup('env','DB_SERVER') }}"
 
   tasks:
     - name: Atualizar lista de pacotes
@@ -71,18 +71,15 @@
     #     src: ~/appsettings/appsettings.json 
     #     dest: /home/ubuntu/app/BackEnd
 
-    # #CONFIGURANDO APPSETINGS COM KEYS
-    # - name: Passando env para o a vm
-    #   shell:
-    #     export DB_PASS={{ DB_PASS }}
-    #     export DB_SERVER={{ DB_SERVER }}
-
     #CONFIGURANDO APPSETINGS COM KEYS
-    # - name: Passando env para a vm
-    #   shell: |
-    #     export "DB_PASS: {{ DB_PASS }}"
-    #     export "DB_SERVER: {{ DB_SERVER }}"
-    #   register: env_output
+    - name: Passando env para o a vm      
+      with:
+        DB_PASS: ${{ secrets.DB_PASS }} 
+        DB_SERVER: ${{ secrets.DB_SERVER }} 
+      shell:
+        export DB_PASS={{ DB_PASS }}
+        export DB_SERVER={{ DB_SERVER }}
+
 
     - name: Exibir saída das variáveis de ambiente
       debug:
