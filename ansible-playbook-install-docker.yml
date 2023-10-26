@@ -80,5 +80,5 @@
         image: green
         state: started
         published_ports:
-          - "8000:8000" # Mapeia a porta 8000 do host para a porta 8000 do container
+          - "8081:8081" # Mapeia a porta 8081 do host para a porta 8081 do container
 
