@@ -75,7 +75,7 @@
     - name: Passando env para o a vm
       shell:
         export DB_PASS={{ DB_PASS }}
-        export DB_SERVER:={{ DB_SERVER }}
+        export DB_SERVER={{ DB_SERVER }}
 
     #Modificar daqui para baixo, que é onde buildaremos o dokerfile em C#
     - name: Acessar a instância por SSH e Buildar o Dockerfile
