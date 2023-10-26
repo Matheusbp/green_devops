@@ -63,33 +63,26 @@
     - name: Executar o comando usermod para adicionar usuário ao grupo Docker
       shell: sudo usermod -aG docker ubuntu
 
-    - name: Passar secrets do BD do GitHub para variáveis de ambiente na máquina
-      # Nome descritivo da tarefa
 
-      tasks:
-        # Lista de tarefas a serem executadas nesta play.
+    - name: Definir variável de ambiente para a secret do usuário
+    # Nome descritivo da primeira tarefa
 
-        - name: Definir variável de ambiente para a secret do usuário
-          # Nome descritivo da primeira tarefa
-
-          environment:
-            DB_USER: "{{ lookup('env', 'DB_SERVER') }}"
+      environment:
+        DB_USER: "{{ lookup('env', 'DB_SERVER') }}"
             # Define a variável de ambiente 'DB_SERVER' com o valor da secret do GitHub.
 
-        - name: Definir variável de ambiente para a secret da senha
-          # Nome descritivo da segunda tarefa
-
-          environment:
-            DB_PASSWORD: "{{ lookup('env', 'DB_PASS') }}"
+    - name: Definir variável de ambiente para a secret da senha
+    # Nome descritivo da segunda tarefa
+      environment:
+        DB_PASSWORD: "{{ lookup('env', 'DB_PASS') }}"
             # Define a variável de ambiente 'DB_PASS' com o valor da secret do GitHub.
 
-        - name: Executar o comando ou script que utiliza as variáveis de ambiente
-          # Nome descritivo da terceira tarefa
-
-          shell: |
-            echo "DB_SERVER: $DB_SERVER"
-            echo "DB_PASS: $DB_PASS"
-            # Executa um comando shell que utiliza as variáveis de ambiente definidas acima.   
+    - name: Executar o comando ou script que utiliza as variáveis de ambiente
+    # Nome descritivo da terceira tarefa
+      shell: |
+        echo "DB_SERVER: $DB_SERVER"
+        echo "DB_PASS: $DB_PASS"
+        # Executa um comando shell que utiliza as variáveis de ambiente definidas acima.   
 
     #Modificar daqui para baixo, que é onde buildaremos o dokerfile em C#
     - name: Acessar a instância por SSH e Buildar o Dockerfile
