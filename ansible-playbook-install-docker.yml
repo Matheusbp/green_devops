@@ -82,7 +82,7 @@
 
     - name: Exibir saída das variáveis de ambiente
       debug:
-        msg: "The secret is {{ lookup('env)','DB_PASS') }}"
+        msg: "The secret is {{ lookup('env','DB_PASS') }}"
 
     #Modificar daqui para baixo, que é onde buildaremos o dokerfile em C#
     - name: Acessar a instância por SSH e Buildar o Dockerfile
