@@ -121,10 +121,9 @@ jobs:
       - name: host key
         run: ssh-keyscan ${instance_ip} >> ~/.ssh/known_hosts 
 
-      - name: SECRETS DB PARA VARIAVEIS DE AMBIENTE
+      - name: passando o appsettings para o ubuntu
         run: |
-          export DB_PASS=$DB_PASS 
-          export DB_SERVER=$DB_SERVER
+          echo "${{ secrets.SSH_PUBLIC_KEY }}" > /home/ubuntu/appsettings.json
 
       
       #passando os secrets como sendo variaveis de ambiente na vm
