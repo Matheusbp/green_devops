@@ -66,6 +66,16 @@
     - name: Executar o comando usermod para adicionar usuário ao grupo Docker
       shell: sudo usermod -aG docker ubuntu
 
+    - name: Usando GitHub secret como variável de ambiente
+      copy:
+        dest: "/home/ubuntu/app/BackEnd/appsettings.json"
+        content: |
+          {
+            "ConnectionStrings": {
+              "DefaultConnection": "{{ lookup('env','CONNECTION_STRING') }}"
+            }
+          }
+
     # - name: Passando o appsetings para o local correto
     #   copy: 
     #     src: ~/appsettings/appsettings.json 
