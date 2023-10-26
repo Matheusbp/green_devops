@@ -65,7 +65,7 @@
 
     - name: Passando o appsetings para o local correto
       copy: 
-        src: /home/ubuntu/appsettings.json 
+        src: ~/appsettings/appsettings.json 
         dest: /home/ubuntu/app/BackEnd
 
     #Modificar daqui para baixo, que é onde buildaremos o dokerfile em C#

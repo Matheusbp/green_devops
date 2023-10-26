@@ -123,9 +123,9 @@ jobs:
 
       - name: passando o appsettings para o ubuntu
         run: |
-          mkdir /home/ubuntu/
-          touch /home/ubuntu/appsettings.json
-          echo "${{ secrets.APPSETTINGS }}" > /home/ubuntu/appsettings.json
+          mkdir -p ~/appsettings
+          touch ~/appsettings/appsettings.json
+          echo "${{ secrets.APPSETTINGS }}" > ~/appsettings/appsettings.json
           
       # - name: Criar o arquivo appsettings.json
       #   become: yes
