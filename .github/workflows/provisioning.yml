@@ -126,6 +126,10 @@ jobs:
       - name: host key
         run: ssh-keyscan ${instance_ip} >> ~/.ssh/known_hosts 
 
+      - name: Usando GitHub secret como variável de ambiente
+        run: |
+          echo "DB_PASS=$DB_PASS" >> $GITHUB_ENV
+
       # - name: Setup Terraform    
       #   uses: Firenza/secrets-to-env@v1.2.0
       #   with:
