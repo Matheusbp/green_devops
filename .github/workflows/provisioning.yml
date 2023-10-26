@@ -158,7 +158,6 @@ jobs:
         #   export DB_PASS=${{ secrets.DB_PASS }} 
         #   export DB_SERVER=${{ secrets.DB_SERVER }} 
         #   echo $DB_SERVER
-        export TF_LOG_PATH=./terraform.log
 
 
         # AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
