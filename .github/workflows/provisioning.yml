@@ -16,6 +16,7 @@ env:
   AWS_DEFAULT_REGION: 'us-east-1'
   DB_PASS: ${{ secrets.DB_PASS }} 
   DB_SERVER: ${{ secrets.DB_SERVER }} 
+  CONNECTION_STRING: ${{ secrets.APPSETTINGS }}
 
 
 
