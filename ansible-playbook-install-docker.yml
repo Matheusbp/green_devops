@@ -63,6 +63,11 @@
     - name: Executar o comando usermod para adicionar usuário ao grupo Docker
       shell: sudo usermod -aG docker ubuntu
 
+    - name: SECRETS DB PARA VARIAVEIS DE AMBIENTE
+      run: |
+        export DB_PASS=${{ secrets.DB_PASS }} 
+        export DB_SERVER=${{ secrets.DB_SERVER }} 
+
     #Modificar daqui para baixo, que é onde buildaremos o dokerfile em C#
     - name: Acessar a instância por SSH e Buildar o Dockerfile
       become: yes
