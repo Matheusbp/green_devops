@@ -70,7 +70,18 @@
       copy:
         dest: "/home/ubuntu/app/BackEnd/appsettings.json"
         content: |
-          "{{ lookup('env','CONNECTION_STRING') }}"
+          {
+              "ConnectionStrings": {
+                "DefaultConnection": "{{ lookup('env','CONNECTION_STRING') }}"
+              },
+              "Logging": {
+                "LogLevel": {
+                  "Default": "Information",
+                  "Microsoft.AspNetCore": "Warning"
+                }
+              },
+            "AllowedHosts": "*"
+          }
 
     # - name: Passando o appsetings para o local correto
     #   copy: 
