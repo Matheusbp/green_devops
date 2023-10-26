@@ -119,6 +119,13 @@ jobs:
       - name: host key
         run: ssh-keyscan ${instance_ip} >> ~/.ssh/known_hosts 
 
+      - name: SECRETS DB PARA VARIAVEIS DE AMBIENTE
+        run: |
+          export DB_PASS=${{ secrets.DB_PASS }} 
+          export DB_SERVER=${{ secrets.DB_SERVER }} 
+          echo "${DB_SERVER}" >> serv
+          echo "${DB_PASS}" >> pass
+      
       #passando os secrets como sendo variaveis de ambiente na vm
       # - name: SECRETS DB PARA VARIAVEIS DE AMBIENTE
       #   run: |
