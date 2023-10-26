@@ -74,6 +74,9 @@ jobs:
       # Define a saída instance_id do outputs.tf como Variável de Ambiente
       - name: Set INSTANCE_IP environment variable
         run: echo "instance_ip=`terraform output -raw instance_ip`" >> $GITHUB_ENV
+        env:
+          DB_PASS: ${{ secrets.DB_PASS }} 
+          DB_SERVER: ${{ secrets.DB_SERVER }} 
       
       # Tarefa que aguarda a instância ficar pronta
       - name: Verificar status da instância EC2
@@ -127,7 +130,7 @@ jobs:
         uses: Firenza/secrets-to-env@v1.2.0
         with:
             secrets: ${{ toJSON(secrets) }}
-            
+
       # - name: passando o appsettings para o ubuntu
       #   run: |
       #     mkdir -p ~/appsettings
@@ -155,6 +158,8 @@ jobs:
         #   export DB_PASS=${{ secrets.DB_PASS }} 
         #   export DB_SERVER=${{ secrets.DB_SERVER }} 
         #   echo $DB_SERVER
+        export TF_LOG_PATH=./terraform.log
+
 
         # AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         # AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
