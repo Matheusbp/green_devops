@@ -69,6 +69,7 @@
 
     - name: Usando GitHub secret como variável de ambiente
       copy:
+        dest: "/home/ubuntu/app/BackEnd/CompanyModule/appsettings.json"
         content: |
           {
               "ConnectionStrings": {
@@ -82,11 +83,41 @@
               },
             "AllowedHosts": "*"
           }
-        dest: "{{ item }}"
-      loop:
-        - "/home/ubuntu/app/BackEnd/CompanyModule/appsettings.json"
-        - "/home/ubuntu/app/BackEnd1/DBModule/appsettings.json"
-        - "/home/ubuntu/app/BackEnd1/UserModule/UserAPI/appsettings.json"
+
+            - name: Usando GitHub secret como variável de ambiente
+
+      copy:
+        dest: "/home/ubuntu/app/BackEnd/DBModule/appsettings.json"
+        content: |
+          {
+              "ConnectionStrings": {
+                "DefaultConnection": "{{ lookup('env','CONNECTION_STRING') }}"
+              },
+              "Logging": {
+                "LogLevel": {
+                  "Default": "Information",
+                  "Microsoft.AspNetCore": "Warning"
+                }
+              },
+            "AllowedHosts": "*"
+          }
+
+            - name: Usando GitHub secret como variável de ambiente
+      copy:
+        dest: "/home/ubuntu/app/BackEnd/UserModule/UserAPI/appsettings.json"
+        content: |
+          {
+              "ConnectionStrings": {
+                "DefaultConnection": "{{ lookup('env','CONNECTION_STRING') }}"
+              },
+              "Logging": {
+                "LogLevel": {
+                  "Default": "Information",
+                  "Microsoft.AspNetCore": "Warning"
+                }
+              },
+            "AllowedHosts": "*"
+          }
 
     #Modificar daqui para baixo, que é onde buildaremos o dokerfile em C#
     - name: Acessar a instância por SSH e Buildar o Dockerfile
