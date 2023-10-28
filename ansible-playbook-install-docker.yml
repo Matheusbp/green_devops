@@ -47,10 +47,8 @@
         enabled: yes # Habilita o serviço para ser iniciado automaticamente no boot
 
     - name: Baixar e instalar Docker Compose
-      get_url:
-        url: "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)"
-        dest: "/usr/local/bin/docker-compose"
-        mode: '0755'
+      shell: |
+        pip install docker-compose
 
     - name: Copiar chave SSH para a instância
       copy:
