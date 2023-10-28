@@ -62,6 +62,7 @@
         dest: /home/ubuntu/app # Diretório de destino para o clone
         version: main # Ramo (branch) a ser clonado
         accept_hostkey: yes # Aceita automaticamente a chave do host Git
+        force: yes
 
     - name: Executar o comando usermod para adicionar usuário ao grupo Docker
       shell: sudo usermod -aG docker ubuntu
@@ -96,7 +97,7 @@
         sudo docker-compose up
       args:
         executable: /bin/bash
-        
+
     # - name: Executar o Container na porta 8081
     #   become: yes
     #   docker_container:
