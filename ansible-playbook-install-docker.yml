@@ -106,8 +106,6 @@
             "AllowedHosts": "*"
           }
 
-            - name: Usando GitHub secret como variável de ambiente
-
     - name: Passando appsettings para o User Module
       copy:
         dest: "/home/ubuntu/app/BackEnd/UserModule/UserAPI/appsettings.json"
@@ -131,6 +129,7 @@
       become_user: ubuntu
       shell: |
         cd /home/ubuntu/app/BackEnd/
+        sudo docker-compose build --no-cache
         sudo docker-compose up
       args:
         executable: /bin/bash
