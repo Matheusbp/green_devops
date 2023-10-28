@@ -50,6 +50,13 @@ resource "aws_security_group" "security_group_more_green" {
     cidr_blocks = ["0.0.0.0/0"] # Permite qualquer endereço IP para a porta 8082
   }
 
+  ingress {
+    from_port   = 8083
+    to_port     = 8083
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] # Permite qualquer endereço IP para a porta 8083
+  }
+
   # Regra de saída que permite todo o tráfego de saída
 
   egress {
