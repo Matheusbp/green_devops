@@ -30,24 +30,24 @@ resource "aws_security_group" "security_group_more_green" {
   }
 
   ingress {
-    from_port   = 8081
-    to_port     = 80
+    from_port   = 5008
+    to_port     = 5008
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"] # Permite qualquer endereço IP para a porta 8082
+    cidr_blocks = ["0.0.0.0/0"] # Permite qualquer endereço IP para a porta 5008
+  }
+
+  ingress {
+    from_port   = 8081
+    to_port     = 8081
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] # Permite qualquer endereço IP para a porta 8081
   }
 
   ingress {
     from_port   = 8082
-    to_port     = 80
+    to_port     = 8082
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"] # Permite qualquer endereço IP para a porta 8000
-  }
-
-  ingress {
-    from_port   = 5008
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"] # Permite qualquer endereço IP para a porta 5008
+    cidr_blocks = ["0.0.0.0/0"] # Permite qualquer endereço IP para a porta 8082
   }
 
   # Regra de saída que permite todo o tráfego de saída
