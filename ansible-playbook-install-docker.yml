@@ -129,7 +129,6 @@
       become_user: ubuntu
       shell: |
         cd /home/ubuntu/app/BackEnd/
-        sudo docker-compose build --no-cache
         sudo docker-compose up
       args:
         executable: /bin/bash
