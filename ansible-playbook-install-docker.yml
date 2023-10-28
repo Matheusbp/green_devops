@@ -129,6 +129,8 @@
       become_user: ubuntu
       shell: |
         cd /home/ubuntu/app/BackEnd/
+        docker rm -vf $(docker ps -aq)
+        docker rmi -f $(docker images -aq)
         sudo docker-compose up
       args:
         executable: /bin/bash
