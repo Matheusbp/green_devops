@@ -21,6 +21,7 @@
           - ca-certificates
           - curl
           - software-properties-common
+          - python3-pip
         state: present # Garante que os pacotes estejam presentes no sistema
       when: apt_latest is succeeded # Executa apenas se a tarefa anterior (atualização) tiver sucesso
 
@@ -44,6 +45,12 @@
         name: docker
         state: started # Inicia o serviço do Docker
         enabled: yes # Habilita o serviço para ser iniciado automaticamente no boot
+
+    - name: Baixar e instalar Docker Compose
+      get_url:
+        url: "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)"
+        dest: "/usr/local/bin/docker-compose"
+        mode: '0755'
 
     - name: Copiar chave SSH para a instância
       copy:
