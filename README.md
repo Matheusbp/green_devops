@@ -16,7 +16,7 @@ Para provisionar a máquina, entrar nela e buildar a imagem, temos que:
 	2.2 AWS_SECRET_ACCESS_KEY - com informações da nossa conta AWS;
 	2.3 SSH_PRIVATE_KEY - Informações da nossa chave id_rsa privada;
 	2.3 SSH_PUBLIC_KEY - Informações da nossa chave id_rsa.pub.
-5.	Definir nome da instância em main.tf;
+5.	Definir nome da instância em main.tf; 
 6.	Definir nome do bucket S3 em backend.tf (local onde ficará o arquivo .tfstate que indica o estado da máquina);
 7.	Definir o nome para o par de chaves utilizada na AWS em key.tf;
 8.	Conferir se o nome o repositório do git está pegando a imagem correta e que as pastas estão setadas para pegar o Dockerfile e buildar.
