@@ -68,7 +68,6 @@
 
     - name: Usando GitHub secret como variável de ambiente
       copy:
-        dest: "/home/ubuntu/app/BackEnd/appsettings.json"
         content: |
           {
               "ConnectionStrings": {
@@ -82,25 +81,11 @@
               },
             "AllowedHosts": "*"
           }
-
-
-    # - name: Passando o appsetings para o local correto
-    #   copy: 
-    #     src: ~/appsettings/appsettings.json 
-    #     dest: /home/ubuntu/app/BackEnd
-
-    #CONFIGURANDO APPSETINGS COM KEYS
-    # - name: Passando env para a vm
-    #   shell: |
-    #     export DB_PASS=${{ secrets.DB_PASS }}
-    #     export DB_SERVER=${{ secrets.DB_SERVER }}
-    #   environment:
-    #     DB_PASS: "${{ secrets.DB_PASS }}"
-    #     DB_SERVER: "${{ secrets.DB_SERVER }}"
-
-    - name: Exibir saída das variáveis de ambiente
-      debug:
-        msg: "The secret is {{ lookup('env','DB_PASS') }}"
+        dest: "{{ item }}"
+      loop:
+        - "/home/ubuntu/app/BackEnd/CompanyModule/appsettings.json"
+        - "/home/ubuntu/app/BackEnd1/DBModule/appsettings.json"
+        - "/home/ubuntu/app/BackEnd1/UserModule/UserAPI/appsettings.json"
 
     #Modificar daqui para baixo, que é onde buildaremos o dokerfile em C#
     - name: Acessar a instância por SSH e Buildar o Dockerfile
@@ -108,16 +93,16 @@
       become_user: ubuntu
       shell: |
         cd /home/ubuntu/app/BackEnd/
-        sudo docker build -t green .
+        sudo docker-compose up
       args:
         executable: /bin/bash
-
-    - name: Executar o Container na porta 8081
-      become: yes
-      docker_container:
-        name: green-container
-        image: green
-        state: started
-        published_ports:
-          - "8081:8081" # Mapeia a porta 8081 do host para a porta 8081 do container
+        
+    # - name: Executar o Container na porta 8081
+    #   become: yes
+    #   docker_container:
+    #     name: green-container
+    #     image: green
+    #     state: started
+    #     published_ports:
+    #       - "8081:8081" # Mapeia a porta 8081 do host para a porta 8081 do container
 
