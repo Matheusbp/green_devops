@@ -135,7 +135,7 @@
       become_user: ubuntu
       shell: |
         cd /home/ubuntu/app/BackEnd/
-        sudo docker-compose up
+        sudo docker-compose up -d
       args:
         executable: /bin/bash
 
