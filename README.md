@@ -20,7 +20,7 @@ Para provisionar a máquina, entrar nela e buildar a imagem, temos que:
 6.	Definir nome do bucket S3 em backend.tf (local onde ficará o arquivo .tfstate que indica o estado da máquina);
 7.	Definir o nome para o par de chaves utilizada na AWS em key.tf;
 8.	Conferir se o nome o repositório do git está pegando a imagem correta e que as pastas estão setadas para pegar o Dockerfile e buildar.
-9.	Testar a aplicação rodando na VM! 
+9.	Testar a aplicação rodando na VM!
 
 PARA COLOCAR O BD TEMOS QUE CRIAR O BD PODE SER NO WORKBENCH E AI PEGA DBUSER E DBPASS E ADICIONA ISSO NO ENV DENTRO DO LOCAL ONDE SUBIREMOS A APLICAÇÃO.
 
