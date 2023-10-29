@@ -14,8 +14,6 @@ env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   AWS_DEFAULT_REGION: 'us-east-1'
-  DB_PASS: ${{ secrets.DB_PASS }} 
-  DB_SERVER: ${{ secrets.DB_SERVER }} 
   CONNECTION_STRING: ${{ secrets.APPSETTINGS }}
 
 
@@ -76,9 +74,6 @@ jobs:
       # Define a saída instance_id do outputs.tf como Variável de Ambiente
       - name: Set INSTANCE_IP environment variable
         run: echo "instance_ip=`terraform output -raw instance_ip`" >> $GITHUB_ENV
-        env:
-          DB_PASS: ${{ secrets.DB_PASS }} 
-          DB_SERVER: ${{ secrets.DB_SERVER }} 
       
       # Tarefa que aguarda a instância ficar pronta
       - name: Verificar status da instância EC2
@@ -127,47 +122,6 @@ jobs:
       #para escanear a chave pública de um servidor remoto (no caso, um servidor SSH) e adicionar essa chave ao arquivo known_hosts
       - name: host key
         run: ssh-keyscan ${instance_ip} >> ~/.ssh/known_hosts 
-
-      - name: Usando GitHub secret como variável de ambiente
-        run: |
-          echo "DB_PASS=$DB_PASS" >> $GITHUB_ENV
-
-      # - name: Setup Terraform    
-      #   uses: Firenza/secrets-to-env@v1.2.0
-      #   with:
-      #       secrets: ${{ toJSON(secrets) }}
-      
-      # - name: passando o appsettings para o ubuntu
-      #   run: |
-      #     mkdir -p ~/appsettings
-      #     touch ~/appsettings/appsettings.json
-      #     echo "${{ secrets.APPSETTINGS }}" > ~/appsettings/appsettings.json
-          
-      # - name: Criar o arquivo appsettings.json
-      #   become: yes
-      #   copy:
-      #     content: "${{ secrets.APPSETTINGS }}"
-      #     dest: /home/ubuntu/appsettings.json
-
-
-      
-      #passando os secrets como sendo variaveis de ambiente na vm
-      # - name: SECRETS DB PARA VARIAVEIS DE AMBIENTE
-      #   run: |
-      #     echo "DB_PASS=${{ secrets.DB_PASS }}" >> $GITHUB_ENV
-      #     echo "DB_SERVER=${{ secrets.DB_SERVER }}" >> $GITHUB_ENV
-        #
-        # env:
-        #   DB_PASS: ${{ secrets.DB_PASS }} 
-        #   DB_SERVER: ${{ secrets.DB_SERVER }} 
-      # run: |
-        #   export DB_PASS=${{ secrets.DB_PASS }} 
-        #   export DB_SERVER=${{ secrets.DB_SERVER }} 
-        #   echo $DB_SERVER
-
-
-        # AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        # AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       # Executa o Playbook do Ansible
       - name: Run Ansible Playbook
