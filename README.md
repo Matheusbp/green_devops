@@ -16,9 +16,9 @@ O time DevOps foi responsável pela "dockerização" da aplicação Backend (em 
 
 Este README explica:
 - A Dockerização das aplicações em C#.
- - O provisionamento da máquina na AWS utilizando Terraform;
- - Como as imagens Docker foram buildadas e todo o mapeamento de portas utilizado com Docker-Compose e fazendo o acesso via Ansible;  
- - Como o Ansible acessa as máquinas para fazer a instalação e configuração da VM para buildar e rodar a aplicação construida pelo Backend.
+- O provisionamento da máquina na AWS utilizando Terraform;
+- Como as imagens Docker foram buildadas e todo o mapeamento de portas utilizado com Docker-Compose e fazendo o acesso via Ansible;  
+- Como o Ansible acessa as máquinas para fazer a instalação e configuração da VM para buildar e rodar a aplicação construida pelo Backend.
 
 **Ao dar push na main, automaticamente inicia-se os processos citados aqui.**
 
@@ -87,10 +87,7 @@ A seguir tem-se a documentação do arquivo **provisioning.yml** que provisiona 
 
 # Playbook Ansible para Instalar Docker em um Host Remoto
 
-
-# Playbook Ansible para Instalar Docker em um Host Remoto
-
-Este playbook Ansible foi criado para automatizar a instalação do Docker em um host remoto. Ele realiza as seguintes etapas:
+#### Este playbook Ansible foi criado para automatizar a instalação do Docker em um host remoto. Ele realiza as seguintes etapas:
 
 1. Atualiza a lista de pacotes do sistema para garantir que os pacotes estejam atualizados.
 
