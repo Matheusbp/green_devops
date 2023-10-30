@@ -1,6 +1,15 @@
 
 # Hackweek Devs2Blu time DevOps 💻
 
+## Tecnologia utilizadas:
+
+<div style="display: flex; justify-content: center; align-items: center; padding: 5px;"> 
+<img src="imgs/icon-terraform.png" alt="">
+<img src="imgs/icon-ansible.png" alt="">
+<img src="imgs/icon-github-actions.png" alt="">
+<img src="imgs/icon-aws.png" alt="">
+</div>
+
 ## Introdução 📈
 
 O time DevOps foi responsável pela "dockerização" da aplicação Backend (em C#).
@@ -8,7 +17,8 @@ O time DevOps foi responsável pela "dockerização" da aplicação Backend (em 
 Este README explica:
 - A Dockerização das aplicações em C#.
  - O provisionamento da máquina na AWS utilizando Terraform;
- - Como as imagens Docker foram buildadas e todo o mapeamento de portas utilizado com Docker-Compose e fazendo o acesso via Ansible;  - 
+ - Como as imagens Docker foram buildadas e todo o mapeamento de portas utilizado com Docker-Compose e fazendo o acesso via Ansible;  
+ - Como o Ansible acessa as máquinas para fazer a instalação e configuração da VM para buildar e rodar a aplicação construida pelo Backend.
 
 **Ao dar push na main, automaticamente inicia-se os processos citados aqui.**
 
@@ -71,3 +81,44 @@ A seguir tem-se a documentação do arquivo **provisioning.yml** que provisiona 
 	    - Escaneia a chave pública do servidor remoto (instância EC2) e a adiciona ao arquivo "known_hosts" para estabelecer uma conexão segura.
 15.  **Execução do Playbook Ansible**:
 		- Executa o playbook Ansible "ansible-playbook-install-docker.yml" na instância criada, usando o arquivo de inventário "inventory.ini" e a chave privada SSH para acesso.
+
+
+## Como funciona o script Ansible
+
+# Playbook Ansible para Instalar Docker em um Host Remoto
+
+
+# Playbook Ansible para Instalar Docker em um Host Remoto
+
+Este playbook Ansible foi criado para automatizar a instalação do Docker em um host remoto. Ele realiza as seguintes etapas:
+
+1. Atualiza a lista de pacotes do sistema para garantir que os pacotes estejam atualizados.
+
+2. Instala o Python 3 para garantir a compatibilidade com as tarefas subsequentes.
+
+3. Instala os pacotes necessários, incluindo `apt-transport-https`, `ca-certificates`, `curl`, `software-properties-common` e `python3-pip`.
+
+4. Adiciona a chave GPG do Docker ao sistema.
+
+5. Adiciona o repositório do Docker ao sistema.
+
+6. Instala o Docker Community Edition.
+
+7. Garante que o serviço do Docker esteja em execução e configurado para iniciar automaticamente no boot.
+
+8. Baixa e instala o Docker Compose usando o pip.
+
+9. Copia uma chave SSH do host de controle para o host remoto para facilitar o acesso SSH no futuro.
+
+10. Clona um repositório Git em um diretório especificado no host remoto.
+
+11. Adiciona o usuário 'ubuntu' ao grupo 'docker' para permitir a execução de comandos Docker.
+
+12. Copia arquivos de configuração `appsettings.json` para módulos específicos do aplicativo, configurando as strings de conexão do banco de dados.
+
+13. Acessa a instância por SSH, limpa todos os contêineres e imagens Docker existentes e inicia os contêineres definidos no arquivo `docker-compose.yml`.
+
+## Pré-requisitos
+
+- O host remoto deve ser acessível via SSH e o usuário remoto 'ubuntu' deve ter permissões de superusuário (sudo).
+- Configure as variáveis de ambiente, como `CONNECTION_STRING`, conforme necessário, ou descomente as linhas que usam as variáveis no playbook.
